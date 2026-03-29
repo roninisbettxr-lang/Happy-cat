@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<!-- saved from url=(0047)file:///G:/Html%20Files/Happycat/Happy_cat.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cat Party - Flash Drive Edition</title>
+    <style>
+        /* Smooth Rainbow Disco Animation */
+        @keyframes disco {
+            0%   { background-color: #ffadad; }
+            20%  { background-color: #ffd6a5; }
+            40%  { background-color: #fdffb6; }
+            60%  { background-color: #caffbf; }
+            80%  { background-color: #a0c4ff; }
+            100% { background-color: #ffadad; }
+        }
+
+        /* Happy Bouncing Animation */
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* Fish Floating Animation */
+        @keyframes eatFish {
+            0% { transform: scale(1) translateY(0); opacity: 1; }
+            50% { transform: scale(1.5) translateY(-20px); opacity: 1; }
+            100% { transform: scale(0) translateY(-40px); opacity: 0; }
+        }
+
+        body {
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            font-family: 'Courier New', Courier, monospace;
+            animation: disco 10s infinite linear;
+            overflow: hidden;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.92);
+            padding: 40px;
+            border-radius: 40px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            text-align: center;
+            position: relative;
+            min-width: 320px;
+        }
+
+        .party-hat {
+            color: #ff00ff;
+            font-weight: bold;
+            font-size: 22px;
+            margin-bottom: -10px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .cottage {
+            color: #8B4513;
+            font-weight: bold;
+            line-height: 1.1;
+            margin-bottom: 5px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .cat-container {
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        .cat {
+            font-size: 36px;
+            display: inline-block;
+            animation: bounce 0.8s infinite ease-in-out;
+            cursor: pointer;
+            user-select: none;
+            white-space: pre;
+        }
+
+        h1 {
+            color: #333;
+            margin: 15px 0;
+            font-size: 28px;
+            letter-spacing: 2px;
+        }
+
+        .controls {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        button {
+            border: none;
+            padding: 14px 28px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: all 0.2s ease;
+            color: white;
+        }
+
+        .pet-btn { background-color: #ff9900; }
+        .treat-btn { background-color: #00bcd4; }
+
+        button:hover { transform: translateY(-3px); filter: brightness(1.1); }
+        button:active { transform: translateY(0) scale(0.95); }
+
+        .message-box {
+            margin-top: 15px;
+            height: 25px;
+            font-weight: bold;
+            color: #444;
+            font-size: 18px;
+        }
+
+        .flying-fish {
+            position: absolute;
+            font-size: 40px;
+            animation: eatFish 0.8s forwards ease-in;
+            pointer-events: none;
+            z-index: 10;
+        }
+        
+        marquee {
+            width: 100%;
+            background: rgba(0,0,0,0.85);
+            color: #00ff00;
+            padding: 12px 0;
+            position: absolute;
+            bottom: 0;
+            font-weight: bold;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="main-ui">
+        <div class="party-hat"> / \ </div>
+        
+        <div class="cottage">
+            <pre>   /------\
+  /   []   \
+ /          \
+|   |    |   |
+|___|____|___|
+            </pre>
+        </div>
+
+        <div class="cat-container">
+            <div class="cat" id="cat-art"> ^ --- ^ <br>(  &gt;.&lt;  )<br>  = V =</div>
+        </div>
+
+        <h1>CAT DISCO!</h1>
+
+        <div class="message-box" id="status-text" style="color: rgb(68, 68, 68);">The cat is happy on the drive!</div>
+
+        <div class="controls">
+            <button class="pet-btn" onclick="petCat()">Pet Me</button>
+            <button class="treat-btn" onclick="giveTreat()">Give Treat 🐟</button>
+        </div>
+    </div>
+
+    <marquee scrollamount="12">
+        * FLASH DRIVE EDITION * PARTY ON THE GO * PURRRRRRRRRR * :DDDDDDDDDDDDDD * NOM NOM NOM * POCKET PARTY CAT * 🐟🐟🐟 * SAVED &amp; SECURE *
+    </marquee>
+
+    <script>
+        const catArt = document.getElementById('cat-art');
+        const status = document.getElementById('status-text');
+
+        const states = {
+            normal: " ^ --- ^ \n(  >.<  )\n  = V =",
+            happy:  " ^ --- ^ \n(  u.u  )\n  = v =",
+            eating: " ^ --- ^ \n(  o.o  )\n  = w ="
+        };
+
+        let isBusy = false;
+
+        function petCat() {
+            if (isBusy) return;
+            isBusy = true;
+
+            catArt.innerText = states.happy;
+            status.innerText = "❤️ *Portable Purring* ❤️";
+            status.style.color = "#e91e63";
+            
+            setTimeout(() => {
+                catArt.innerText = states.normal;
+                status.innerText = "The cat is happy on the drive!";
+                status.style.color = "#444";
+                isBusy = false;
+            }, 2000);
+        }
+
+        function giveTreat() {
+            if (isBusy) return;
+            isBusy = true;
+
+            const fish = document.createElement('div');
+            fish.className = 'flying-fish';
+            fish.innerText = '🐟';
+            fish.style.left = '45%';
+            fish.style.top = '55%';
+            document.getElementById('main-ui').appendChild(fish);
+
+            setTimeout(() => {
+                catArt.innerText = states.eating;
+                status.innerText = "NOM NOM NOM! Drive Treat!";
+                status.style.color = "#00bcd4";
+                fish.remove();
+            }, 400);
+
+            setTimeout(() => {
+                catArt.innerText = states.normal;
+                status.innerText = "Plenty of space for fish!";
+                status.style.color = "#444";
+                isBusy = false;
+            }, 2000);
+        }
+    </script>
+
+
+</body></html>
